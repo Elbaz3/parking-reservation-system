@@ -1,0 +1,85 @@
+.zoneCard {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* .zoneCard:hover {
+  transform: translateY(-3px);
+} */
+
+.zoneCard.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.zoneHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.zoneName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.zoneCategory {
+  font-size: 0.85rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #555;
+}
+
+.zoneDetails {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.zoneDetails li {
+  margin: 0.25rem 0;
+}
+
+.zoneFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.openStatus {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+}
+
+.openStatus.open {
+  background: #e6f8ec;
+  color: #2c7a34;
+}
+
+.openStatus.closed {
+  background: #fdecea;
+  color: #b11a1a;
+}
+
+.specialActive {
+  background: #fff7e6;
+  color: #b85c00;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}

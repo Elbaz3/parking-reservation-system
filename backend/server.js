@@ -471,6 +471,16 @@ app.get(BASE + "/admin/reports/parking-state", (req, res) => {
   res.json(report);
 });
 
+// Admin: get employees
+app.get(BASE + "/admin/employees", (req, res) => {
+  const user = req.user;
+  if (!user || user.role !== "admin") {
+    return res.status(403).json({ status: "error", message: "Forbidden" });
+  }
+  const employees = db.users.filter((u) => u.role === "employee");
+  res.json(employees);
+});
+
 // Admin: update category (rates)
 app.put(BASE + "/admin/categories/:id", (req, res) => {
   const user = req.user;

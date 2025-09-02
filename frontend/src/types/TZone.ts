@@ -1,9 +1,11 @@
 export default interface Zone {
-  id: string;
+  id?: string;
+  zoneId?: string;
   name: string;
-  categoryId: string;
-  gateIds: string[];
+  categoryId?: string;
+  gateIds?: string[];
   totalSlots: number;
+  subscriberCount?: number;
 
   occupied: number;
   free: number;
@@ -11,8 +13,8 @@ export default interface Zone {
   availableForVisitors: number;
   availableForSubscribers: number;
 
-  rateNormal: number;
-  rateSpecial: number;
+  rateNormal?: number;
+  rateSpecial?: number;
 
   open: boolean;
 }

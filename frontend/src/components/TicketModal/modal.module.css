@@ -1,0 +1,117 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
+.closeButton:hover {
+  color: #000;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.dataRow {
+  margin-bottom: 8px;
+}
+
+.dataLabel {
+  font-weight: 500;
+}
+
+.printButton {
+  margin-top: 20px;
+  background-color: #1d4ed8;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.printButton:hover {
+  background-color: #2563eb;
+}
+
+.gateWrapper {
+  margin-top: 24px;
+  width: 100%;
+  height: 100px;
+  background: #111827;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative; /* stays inside modal */
+}
+
+.gate {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: #374151;
+  transition: transform 1.5s ease-in-out;
+}
+
+.gateLeft {
+  left: 0;
+  border-right: 2px solid #1d4ed8;
+}
+
+.gateRight {
+  right: 0;
+  border-left: 2px solid #1d4ed8;
+}
+
+.gateOpen .gateLeft {
+  transform: translateX(-100%);
+}
+
+.gateOpen .gateRight {
+  transform: translateX(100%);
+}
+
+.gateMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #22c55e;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  text-align: center;
+}
+
+.gateOpen .gateMessage {
+  opacity: 1;
+}

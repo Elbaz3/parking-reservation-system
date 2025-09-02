@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 6px;
+  gap: 8px;
+  width: fit-content;
+  margin: 20px auto;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 20px;
+  background: rgb(103, 102, 102);
+  border: 1px solid #9c6767;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: #f0f0f0;
+  color: rgb(103, 102, 102);
+}
+
+.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}

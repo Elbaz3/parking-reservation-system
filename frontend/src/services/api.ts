@@ -42,6 +42,15 @@ export const getSubscription = async (id: string) => {
   return res.data;
 };
 
+export const checkintTicket = async (data: {
+  gateId: string;
+  zoneId: string;
+  type: "visitor" | "subscriber";
+}) => {
+  const res = await api.post("/tickets/checkin", data);
+  return res.data;
+};
+
 // ---------- CHECKPOINT ----------
 export const getTicket = async (id: string) => {
   const res = await api.get(`/tickets/${id}`);
@@ -53,12 +62,14 @@ export const checkoutTicket = async (data: {
   forceConvertToVisitor?: boolean;
 }) => {
   const res = await api.post("/tickets/checkout", data);
-  return res.data;
+  return res;
 };
 
 // ---------- ADMIN ----------
-export const getEmployees = async () => {
-  const res = await api.get("/admin/users");
+export const getEmployees = async (token: string) => {
+  const res = await api.get("/admin/employees", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return res.data;
 };
 
@@ -67,7 +78,7 @@ export const addEmployee = async (data: {
   password: string;
   role: string;
 }) => {
-  const res = await api.post("/admin/users", data);
+  const res = await api.post("admin/users", data);
   return res.data;
 };
 
@@ -76,26 +87,56 @@ export const getParkingState = async () => {
   return res.data;
 };
 
-export const toggleZoneOpen = async (id: string, open: boolean) => {
-  const res = await api.put(`/admin/zones/${id}/open`, { open });
+export const getAllSubscriptions = async (token: string) => {
+  const res = await api.get("/admin/subscriptions", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};
+
+export const toggleZoneOpen = async (
+  zoneId: string,
+  open: boolean,
+  token: string
+) => {
+  const res = await api.put(
+    `/admin/zones/${zoneId}/open`,
+    { open },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
   return res.data;
 };
 
 export const updateCategoryRates = async (
   id: string,
-  rates: { rateNormal: number; rateSpecial: number }
+  data: { rateNormal: number; rateSpecial: number },
+  token: string
 ) => {
-  const res = await api.put(`/admin/categories/${id}`, rates);
+  const res = await api.put(`/admin/categories/${id}`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return res.data;
 };
 
-export const addRushHour = async (data: { start: string; end: string }) => {
-  const res = await api.post("/admin/rush-hours", data);
+export const addRushHour = async (
+  data: { start: string; end: string },
+  token: string
+) => {
+  const res = await api.post("/admin/rush-hours", data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return res.data;
 };
 
-export const addVacation = async (data: { start: string; end: string }) => {
-  const res = await api.post("/admin/vacations", data);
+export const addVacation = async (
+  data: { start: string; end: string },
+  token: string
+) => {
+  const res = await api.post("/admin/vacations", data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return res.data;
 };
 

@@ -1,0 +1,113 @@
+import type { AppDispatch, RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { removeUser } from "../store/slices/auth/authSlice";
+import {
+  addRushHour,
+  addVacation,
+  getAllSubscriptions,
+  getParkingState,
+  toggleZoneOpen,
+  updateCategoryRates,
+} from "../services/api";
+import type Zone from "../types/TZone";
+import type { TSubscriber } from "../types/TSubscriber";
+
+const useAdmin = () => {
+  const token = useSelector((state: RootState) => state.auth.user?.token);
+  const [zones, setZones] = useState<Zone[]>([]);
+  const [subs, setSubs] = useState<TSubscriber[]>([]);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeUser());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+    const zones = getParkingState().then((data) => {
+      setZones(data);
+    });
+    const subscriptions = getAllSubscriptions(token).then((data) => {
+      setSubs(data);
+    });
+  }, [token]);
+
+  const handleToggleZone = async (zoneId: string, open: boolean) => {
+    if (!token) return;
+
+    try {
+      const res = await toggleZoneOpen(zoneId, !open, token);
+      const zonesRes = await getParkingState();
+      setZones(zonesRes);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [categoryId, setCategoryId] = useState("cat_premium");
+
+  // ✅ Update category rates
+  const handleUpdateRates = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!token) return;
+
+    const form = e.currentTarget;
+    const rateNormal = Number(
+      (form.elements.namedItem("rateNormal") as HTMLInputElement).value
+    );
+    const rateSpecial = Number(
+      (form.elements.namedItem("rateSpecial") as HTMLInputElement).value
+    );
+
+    await updateCategoryRates(categoryId, { rateNormal, rateSpecial }, token);
+    alert("Category rates updated!");
+  };
+
+  // ✅ Add rush hour
+  const handleAddRushHour = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!token) return;
+
+    const form = e.currentTarget;
+    const start = (form.elements.namedItem("start") as HTMLInputElement).value;
+    const end = (form.elements.namedItem("end") as HTMLInputElement).value;
+
+    await addRushHour({ start, end }, token);
+    alert("Rush hour added!");
+  };
+
+  // ✅ Add vacation
+  const handleAddVacation = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!token) return;
+
+    const form = e.currentTarget;
+    const start = (form.elements.namedItem("start") as HTMLInputElement).value;
+    const end = (form.elements.namedItem("end") as HTMLInputElement).value;
+
+    await addVacation({ start, end }, token);
+    alert("Vacation added!");
+  };
+
+  return {
+    token,
+    zones,
+    subs,
+    categoryId,
+    handleAddRushHour,
+    handleAddVacation,
+    handleToggleZone,
+    handleUpdateRates,
+    setCategoryId,
+  };
+};
+
+export default useAdmin;

@@ -18,7 +18,11 @@ const initialState: IAuthState = {
 const AuthSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    removeUser: (state) => {
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(actAuth.pending, (state) => {
@@ -36,5 +40,6 @@ const AuthSlice = createSlice({
   },
 });
 
+export const { removeUser } = AuthSlice.actions;
 export { actAuth };
 export default AuthSlice.reducer;

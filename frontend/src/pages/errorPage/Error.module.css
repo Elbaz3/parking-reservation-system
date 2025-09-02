@@ -1,0 +1,55 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #f9fafb;
+  text-align: center;
+  overflow: hidden;
+}
+
+.glow {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #ff416c;
+  text-shadow: 0 0 15px rgba(255, 65, 108, 0.8),
+    0 0 30px rgba(255, 65, 108, 0.6), 0 0 45px rgba(255, 65, 108, 0.4);
+  animation: pulse 2s infinite alternate;
+}
+
+.message {
+  font-size: 1.5rem;
+  margin: 1rem 0 2rem;
+  color: #e5e7eb;
+}
+
+.button {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 65, 108, 0.5);
+}
+
+@keyframes pulse {
+  from {
+    text-shadow: 0 0 10px rgba(255, 65, 108, 0.7),
+      0 0 20px rgba(255, 65, 108, 0.5);
+  }
+  to {
+    text-shadow: 0 0 25px rgba(255, 65, 108, 1),
+      0 0 45px rgba(255, 65, 108, 0.7);
+  }
+}

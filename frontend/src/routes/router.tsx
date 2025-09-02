@@ -4,10 +4,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Admin from "../pages/admin/Admin";
-import Checkpoint from "../pages/checkpoint/checkpoint";
+import Checkpoint from "../pages/checkpoint/Checkpoint";
 import Gate from "../pages/gate/[gateId]";
 
-import Error from "../pages/Error";
+import Error from "../pages/errorPage/Error";
 
 const router = createBrowserRouter([
   {
