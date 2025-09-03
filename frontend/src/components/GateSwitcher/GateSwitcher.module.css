@@ -3,7 +3,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px;
-  background-color: #f7f7f7;
+  background: linear-gradient(to right, #4695b77b, #68bbd78e, #6fcef73a);
   border-radius: 8px;
   width: max-content;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);

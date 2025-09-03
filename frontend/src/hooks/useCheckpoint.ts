@@ -30,6 +30,8 @@ export interface Ticket {
 
 const useCheckpoint = () => {
   const token = useSelector((state: RootState) => state.auth.user?.token);
+  const role = useSelector((state: RootState) => state.auth.user?.user.role);
+
   const [ticketId, setTicketId] = useState("");
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<Ticket | null>(null);
@@ -73,10 +75,10 @@ const useCheckpoint = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    return () => {
+    if (!role) {
       dispatch(removeUser());
-    };
-  }, [dispatch]);
+    }
+  }, [role, dispatch]);
 
   return {
     token,

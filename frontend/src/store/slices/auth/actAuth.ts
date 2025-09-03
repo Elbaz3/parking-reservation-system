@@ -1,25 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { login as login } from "../../../services/api";
+import { login } from "../../../services/api";
 import type { AuthResponse } from "../../../types/TUser";
 
 const actAuth = createAsyncThunk<
   AuthResponse,
-  { username: string; password: string; role: "employee" | "admin" }
+  { username: string; password: string; role: "employee" | "admin" },
+  { rejectValue: { message: string } }
 >("auth/actAuth", async (userData, thunkApi) => {
   const { rejectWithValue } = thunkApi;
+
   try {
     const response = await login(userData);
+
     if (
       response.data.user.role === "employee" &&
-      response.data.user.role != userData.role
+      response.data.user.role !== userData.role
     ) {
-      return rejectWithValue({
-        message: "not allowed",
-      });
+      return rejectWithValue({ message: "not allowed" });
     }
+
     return response.data as AuthResponse;
-  } catch (error) {
-    return rejectWithValue(error);
+  } catch (error: any) {
+    return rejectWithValue({
+      message: error.response?.data?.message || "Something went wrong",
+    });
   }
 });
 

@@ -25,7 +25,7 @@ const TicketPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <NavTabs />
-      <label>show ticket</label>
+      <label className={styles.message}>show ticket</label>
       <input
         type="text"
         placeholder="Enter Ticket ID"
@@ -36,14 +36,14 @@ const TicketPage: React.FC = () => {
       <div className={styles.btns}>
         {" "}
         <button
-          className={styles.button}
+          className={styles.checkBtn}
           onClick={handleShow}
           disabled={loading}
         >
           show
         </button>
         <button
-          className={styles.button}
+          className={styles.checkBtn}
           onClick={handleChickout}
           disabled={loading}
         >
@@ -51,10 +51,12 @@ const TicketPage: React.FC = () => {
         </button>
       </div>
 
-      {showT === "show" ? (
+      {loading ? (
+        <p>loading...</p>
+      ) : showT === "show" ? (
         <div className={styles.list}>
           {error ? (
-            <div>{error}</div>
+            <div className={styles.message}>{error}</div>
           ) : (
             <div className={styles.card}>
               <p>
@@ -85,7 +87,7 @@ const TicketPage: React.FC = () => {
           )}
         </div>
       ) : showT === "checkout" && error ? (
-        <div>{error}</div>
+        <div className={styles.message}>{error}</div>
       ) : showT === "checkout" && !error ? (
         <TicketSummary data={checkoutRes} />
       ) : (

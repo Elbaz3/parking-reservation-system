@@ -29,10 +29,10 @@ const Gate = () => {
     handleSubmit,
     inputValue,
     setInputValue,
+    loading,
   } = useGate();
-
   return (
-    <>
+    <div className={styles.gatePage}>
       <header className={styles.header} role="banner" aria-label="Gate header">
         <div className={styles.leftGroup}>
           <span className={styles.gateLabel} aria-label="Gate name or number">
@@ -98,13 +98,15 @@ const Gate = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 className={styles.input}
               />
-              <button type="submit" className={styles.button}>
+              <button type="submit" className={styles.submitT}>
                 Submit
               </button>
             </form>
           )}
         </div>
-        {zones && !isSubscriber ? (
+        {loading === true ? (
+          <p>loading...</p>
+        ) : loading === false && zones && !isSubscriber ? (
           <div className={styles.zonesGrid}>
             {zones.map((zone: TZone) => (
               <ZoneCard key={zone.id} zone={zone} gateId={gateId} />
@@ -163,7 +165,7 @@ const Gate = () => {
           <p>no zones available</p>
         )}
       </main>
-    </>
+    </div>
   );
 };
 

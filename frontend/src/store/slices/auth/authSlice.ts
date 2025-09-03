@@ -22,6 +22,9 @@ const AuthSlice = createSlice({
     removeUser: (state) => {
       state.user = null;
     },
+    reStateError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -32,14 +35,19 @@ const AuthSlice = createSlice({
       .addCase(actAuth.fulfilled, (state, action) => {
         state.loading = "succeeded";
         state.user = action.payload;
+        state.error = null;
       })
       .addCase(actAuth.rejected, (state, action) => {
         state.loading = "failed";
-        state.error = action.error.message || "An unexpected error";
+        if (action.payload) {
+          state.error = action.payload.message;
+        } else {
+          state.error = action.error.message || "An unexpected error";
+        }
       });
   },
 });
 
-export const { removeUser } = AuthSlice.actions;
+export const { removeUser, reStateError } = AuthSlice.actions;
 export { actAuth };
 export default AuthSlice.reducer;

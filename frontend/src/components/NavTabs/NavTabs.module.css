@@ -32,3 +32,7 @@
   border-color: #007bff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
+
+.logout {
+  background-color: red;
+}

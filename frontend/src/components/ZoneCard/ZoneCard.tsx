@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Modal from "../TicketModal/TicketModal";
 import { checkintTicket } from "../../services/api";
 import type { TSubscriber } from "../../types/TSubscriber";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../store";
 import getZones from "../../store/slices/zonesSlice/actGetZones";
 
 type ZoneCardProps = {
@@ -40,6 +40,9 @@ const ZoneCard: React.FC<ZoneCardProps> = ({
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState<ticketData | null>(null);
+
+  const cLoading = useSelector((state: RootState) => state.zones.loading);
+
   // get zones
   useEffect(() => {
     if (gateId) {
@@ -74,42 +77,46 @@ const ZoneCard: React.FC<ZoneCardProps> = ({
         !zone.open || zone.availableForVisitors <= 0 ? styles.disabled : ""
       }`}
     >
-      <header className={styles.zoneHeader}>
-        <h2 className={styles.zoneName}>{zone.name}</h2>
-        <span className={styles.zoneCategory}>{zone.categoryId}</span>
-      </header>
+      {cLoading === "pending" ? (
+        <p>loading...</p>
+      ) : (
+        <>
+          <header className={styles.zoneHeader}>
+            <h2 className={styles.zoneName}>{zone.name}</h2>
+            <span className={styles.zoneCategory}>{zone.categoryId}</span>
+          </header>
+          <ul className={styles.zoneDetails}>
+            <li>Occupied: {zone.occupied}</li>
+            <li>Free: {zone.free}</li>
+            <li>Reserved: {zone.reserved}</li>
+            <li>Visitors Available: {zone.availableForVisitors}</li>
+            <li>Subscribers Available: {zone.availableForSubscribers}</li>
+            <li>Rate (Normal): {zone.rateNormal}</li>
+            <li>Rate (Special): {zone.rateSpecial}</li>
+          </ul>
+          <div className={styles.zoneFooter}>
+            <span
+              className={`${styles.openStatus} ${
+                zone.open ? styles.open : styles.closed
+              }`}
+            >
+              {zone.open ? "Open" : "Closed"}
+            </span>
 
-      <ul className={styles.zoneDetails}>
-        <li>Occupied: {zone.occupied}</li>
-        <li>Free: {zone.free}</li>
-        <li>Reserved: {zone.reserved}</li>
-        <li>Visitors Available: {zone.availableForVisitors}</li>
-        <li>Subscribers Available: {zone.availableForSubscribers}</li>
-        <li>Rate (Normal): {zone.rateNormal}</li>
-        <li>Rate (Special): {zone.rateSpecial}</li>
-      </ul>
+            <button
+              onClick={handleClick}
+              className={styles.zoneSub}
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Go"}
+            </button>
 
-      <div className={styles.zoneFooter}>
-        <span
-          className={`${styles.openStatus} ${
-            zone.open ? styles.open : styles.closed
-          }`}
-        >
-          {zone.open ? "Open" : "Closed"}
-        </span>
-
-        <button
-          onClick={handleClick}
-          className={styles.button}
-          disabled={loading}
-        >
-          {loading ? "Loading..." : "Go"}
-        </button>
-
-        {zone.rateSpecial && (
-          <span className={styles.specialActive}>⭐ Special Active</span>
-        )}
-      </div>
+            {zone.rateSpecial && (
+              <span className={styles.specialActive}>⭐ Special Active</span>
+            )}
+          </div>
+        </>
+      )}
       {modalOpen && modalData && (
         <Modal data={modalData} onClose={() => setModalOpen(false)} />
       )}

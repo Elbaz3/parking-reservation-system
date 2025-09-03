@@ -15,6 +15,9 @@ const Admin = () => {
     handleToggleZone,
     handleUpdateRates,
     setCategoryId,
+    zLoading,
+    subLoading,
+    toglleLoading,
   } = useAdmin();
 
   if (!token) {
@@ -29,76 +32,84 @@ const Admin = () => {
     <div className={styles.page}>
       <NavTabs />
       <div className={styles.adminDashboard}>
-        <div className={styles.employees}>
-          <h2>Subscribers</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Active</th>
-                <th>from</th>
-                <th>to</th>
-                <th>category</th>
-                <th>cars</th>
-              </tr>
-            </thead>
-            <tbody>
-              {subs.map((sub) => (
-                <tr key={sub.id}>
-                  <td>{sub.userName}</td>
-                  <td>{sub.active ? "yes" : "no"}</td>
-                  <td>{new Date(sub.startsAt).toLocaleString()}</td>
-                  <td>{new Date(sub.expiresAt).toLocaleString()}</td>
-                  <td>{sub.category}</td>
-                  <td>
-                    {sub.cars.map((car, i) => (
-                      <span key={i}>{car.model} </span>
-                    ))}
-                  </td>
+        {subLoading ? (
+          <p>loading...</p>
+        ) : (
+          <div className={styles.employees}>
+            <h2>Subscribers</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Active</th>
+                  <th>from</th>
+                  <th>to</th>
+                  <th>category</th>
+                  <th>cars</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {subs.map((sub) => (
+                  <tr key={sub.id}>
+                    <td>{sub.userName}</td>
+                    <td>{sub.active ? "yes" : "no"}</td>
+                    <td>{new Date(sub.startsAt).toLocaleString()}</td>
+                    <td>{new Date(sub.expiresAt).toLocaleString()}</td>
+                    <td>{sub.category}</td>
+                    <td>
+                      {sub.cars.map((car, i) => (
+                        <span key={i}>{car.model} </span>
+                      ))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
-        <div className={styles.zones}>
-          <h2>Zones</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Occupied</th>
-                <th>Free</th>
-                <th>Reserved</th>
-                <th>Visitors Available</th>
-                <th>Subscribers Available</th>
-                <th>state</th>
-                <th>ِAction</th>
-              </tr>
-            </thead>
-            <tbody>
-              {zones.map((zone) => (
-                <tr key={zone.zoneId}>
-                  <td>{zone.name}</td>
-                  <td>{zone.occupied}</td>
-                  <td>{zone.free}</td>
-                  <td>{zone.reserved}</td>
-                  <td>{zone.availableForVisitors}</td>
-                  <td>{zone.availableForSubscribers}</td>
-                  <td>{zone.open ? "open" : "closed"}</td>
-                  <td>
-                    <button
-                      onClick={() => handleToggleZone(zone.zoneId, zone.open)}
-                      className={zone.open ? styles.close : styles.open}
-                    >
-                      {zone.open ? "close" : "open"}
-                    </button>
-                  </td>
+        {zLoading ? (
+          <p>loading...</p>
+        ) : (
+          <div className={styles.zones}>
+            <h2>Zones</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Occupied</th>
+                  <th>Free</th>
+                  <th>Reserved</th>
+                  <th>Visitors Available</th>
+                  <th>Subscribers Available</th>
+                  <th>state</th>
+                  <th>ِAction</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {zones.map((zone) => (
+                  <tr key={zone.zoneId}>
+                    <td>{zone.name}</td>
+                    <td>{zone.occupied}</td>
+                    <td>{zone.free}</td>
+                    <td>{zone.reserved}</td>
+                    <td>{zone.availableForVisitors}</td>
+                    <td>{zone.availableForSubscribers}</td>
+                    <td>{zone.open ? "open" : "closed"}</td>
+                    <td>
+                      <button
+                        onClick={() => handleToggleZone(zone.zoneId, zone.open)}
+                        className={zone.open ? styles.close : styles.open}
+                      >
+                        {zone.open ? "close" : "open"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         {/* Control Panel */}
         <div className={styles.settings}>
@@ -144,7 +155,7 @@ const Admin = () => {
                   />
                 </label>
 
-                <button className={styles.button} type="submit">
+                <button className={styles.addAct} type="submit">
                   Save Rates
                 </button>
               </form>
@@ -172,7 +183,7 @@ const Admin = () => {
                   />
                 </label>
 
-                <button className={styles.button} type="submit">
+                <button className={styles.addAct} type="submit">
                   Add Rush Hour
                 </button>
               </form>
@@ -192,7 +203,7 @@ const Admin = () => {
                   <input className={styles.input} type="date" name="end" />
                 </label>
 
-                <button className={styles.button} type="submit">
+                <button className={styles.addAct} type="submit">
                   Add Vacation
                 </button>
               </form>

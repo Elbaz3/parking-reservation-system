@@ -1,3 +1,12 @@
+.gatePage {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  padding: 10px;
+  min-height: 100vh;
+  min-width: fit-content;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #f9fafb;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -202,7 +211,7 @@ input:checked + .slider:before {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
-.button {
+.submitT {
   padding: 0.6rem 0.9rem;
   background: #2563eb;
   color: white;
@@ -212,12 +221,12 @@ input:checked + .slider:before {
   transition: background 0.25s ease, transform 0.15s ease;
 }
 
-.button:hover {
+.submitT:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
 }
 
-.button:active {
+.submitT:active {
   transform: translateY(0);
 }
 
@@ -226,44 +235,52 @@ input:checked + .slider:before {
   margin: 1rem auto;
   text-align: center;
   font-size: 1.25rem;
-  color: #4b5563;
+  color: #c5cad1;
 }
 
 .subscriberWrapper {
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
-  padding: 1rem;
+  padding: 0.3rem;
 }
-
 .subscriberInfo {
-  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   border: 1px solid #e5e7eb;
-  padding: 1.25rem 1.5rem;
+  padding: 0.7rem 0.6rem;
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.subscriberInfo p,
+h3 {
+  margin: 0;
 }
 
 .subscriberName {
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
-  color: #111827;
+  color: #5c8ef9;
 }
 
 .statusActive {
-  color: #16a34a;
+  color: #1bd55f;
   font-weight: 500;
 }
 
 .statusInactive {
-  color: #dc2626;
+  color: #d51c1c;
   font-weight: 500;
 }
 
 .expiry {
   margin-top: 0.35rem;
-  color: #374151;
+  color: #e1ecfd;
   font-size: 0.9rem;
 }
 
