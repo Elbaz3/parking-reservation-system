@@ -1,7 +1,6 @@
-import type { AppDispatch, RootState } from "../store";
-import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../store";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { removeUser } from "../store/slices/auth/authSlice";
 import {
   addRushHour,
   addVacation,
@@ -21,14 +20,6 @@ const useAdmin = () => {
   const [zLoading, setZLoading] = useState(false);
   const [subLoading, setSubLoading] = useState(false);
   const [toglleLoading, setToglleLoading] = useState(false);
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    if (role && role != "admin") {
-      dispatch(removeUser());
-    }
-  }, [role, dispatch]);
 
   useEffect(() => {
     if (!token) {
@@ -68,7 +59,7 @@ const useAdmin = () => {
 
   const [categoryId, setCategoryId] = useState("cat_premium");
 
-  // ✅ Update category rates
+  //  Update category rates
   const handleUpdateRates = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -138,6 +129,7 @@ const useAdmin = () => {
     zLoading,
     subLoading,
     toglleLoading,
+    role,
   };
 };
 

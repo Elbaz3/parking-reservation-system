@@ -18,9 +18,10 @@ const Admin = () => {
     zLoading,
     subLoading,
     toglleLoading,
+    role,
   } = useAdmin();
 
-  if (!token) {
+  if (!token || role != "admin") {
     return (
       <div>
         <Login role="admin" />
