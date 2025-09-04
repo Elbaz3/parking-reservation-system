@@ -10,7 +10,6 @@ const useGate = () => {
   const { gateId } = useParams();
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [isSubscriber, setIsSubscriber] = useState(false);
   const [subscriberDate, setSubscriberData] = useState<TSubscriber | null>(
     null
@@ -49,12 +48,10 @@ const useGate = () => {
       const result = await getSubscription(inputValue);
       setSubscriberData(result);
       setLoading(false);
-      setError(false);
     } catch (error) {
       if (error) {
-        setError(true);
-      } else {
-        setError(false);
+        alert(error.response.data.message || "subscriber id not found");
+        setLoading(false);
       }
     }
     setInputValue("");
@@ -70,7 +67,6 @@ const useGate = () => {
     setIsSubscriber,
     subscriberDate,
     setSubscriberData,
-    error,
     handleSubmit,
     inputValue,
     setInputValue,
