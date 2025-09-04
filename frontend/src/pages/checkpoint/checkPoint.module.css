@@ -4,6 +4,7 @@
   /* justify-content: center; */
   align-items: center;
   min-height: 100vh;
+  min-width: fit-content;
   gap: 1rem;
   background: linear-gradient(to right, #2d5d71, #274e5b, #294855);
 }
